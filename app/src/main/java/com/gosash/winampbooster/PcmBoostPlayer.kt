@@ -2,65 +2,86 @@ package com.gosash.winampbooster
 
 import kotlin.math.roundToInt
 
+/**
+ * PCM booster utilities.
+ * This file is written to compile cleanly on GitHub Actions without experimental Kotlin flags.
+ * It also includes "alias" method names so older code references won't break compilation.
+ */
 class PcmBoostPlayer {
 
-    /**
-     * Boost PCM 16-bit audio samples safely
-     * @param input ShortArray PCM audio
-     * @param boostFactor Float volume multiplier (1.0 = normal, 2.0 = louder)
-     */
-    fun boost(input: ShortArray, boostFactor: Float): ShortArray {
-        val output = ShortArray(input.size)
+    // ---- Core implementations ----
 
+    fun boost16(input: ShortArray, boostFactor: Float): ShortArray {
+        val out = ShortArray(input.size)
         for (i in input.indices) {
-            val boosted = (input[i] * boostFactor).roundToInt()
-
-            // Clamp to 16-bit PCM range
-            output[i] = when {
-                boosted > Short.MAX_VALUE -> Short.MAX_VALUE
-                boosted < Short.MIN_VALUE -> Short.MIN_VALUE
-                else -> boosted.toShort()
-            }
+            val v = (input[i].toInt() * boostFactor).roundToInt()
+            out[i] = clamp16(v)
         }
-
-        return output
+        return out
     }
 
-    /**
-     * Boost PCM 8-bit audio samples safely
-     */
-    fun boost8Bit(input: ByteArray, boostFactor: Float): ByteArray {
-        val output = ByteArray(input.size)
-
+    fun boost8(input: ByteArray, boostFactor: Float): ByteArray {
+        val out = ByteArray(input.size)
         for (i in input.indices) {
-            val sample = input[i].toInt()
-            val boosted = (sample * boostFactor).roundToInt()
-
-            output[i] = when {
-                boosted > Byte.MAX_VALUE -> Byte.MAX_VALUE
-                boosted < Byte.MIN_VALUE -> Byte.MIN_VALUE
-                else -> boosted.toByte()
-            }
+            val v = (input[i].toInt() * boostFactor).roundToInt()
+            out[i] = clamp8(v)
         }
-
-        return output
+        return out
     }
 
-    /**
-     * Simple limiter (optional)
-     */
-    fun limit(input: ShortArray, maxLevel: Short): ShortArray {
-        val output = ShortArray(input.size)
-
+    fun limit16(input: ShortArray, maxLevel: Short): ShortArray {
+        val out = ShortArray(input.size)
+        val max = maxLevel.toInt()
         for (i in input.indices) {
-            val s = input[i]
-            output[i] = when {
-                s > maxLevel -> maxLevel
-                s < -maxLevel -> (-maxLevel).toShort()
-                else -> s
+            val v = input[i].toInt()
+            out[i] = when {
+                v > max -> maxLevel
+                v < -max -> (-max).toShort()
+                else -> input[i]
             }
         }
+        return out
+    }
 
-        return output
+    // ---- Compatibility / alias methods (so other files compile) ----
+    // If your app calls any of these older names, they will still work.
+
+    fun boost(input: ShortArray, factor: Float): ShortArray = boost16(input, factor)
+    fun boost(input: ByteArray, factor: Float): ByteArray = boost8(input, factor)
+
+    fun applyBoost(input: ShortArray, factor: Float): ShortArray = boost16(input, factor)
+    fun applyBoost(input: ByteArray, factor: Float): ByteArray = boost8(input, factor)
+
+    fun boostPcm16(input: ShortArray, factor: Float): ShortArray = boost16(input, factor)
+    fun boostPcm8(input: ByteArray, factor: Float): ByteArray = boost8(input, factor)
+
+    fun processPcm16(input: ShortArray, factor: Float): ShortArray = boost16(input, factor)
+    fun processPcm8(input: ByteArray, factor: Float): ByteArray = boost8(input, factor)
+
+    fun applyLimiter(input: ShortArray, maxLevel: Short): ShortArray = limit16(input, maxLevel)
+
+    // ---- Helpers ----
+
+    private fun clamp16(v: Int): Short {
+        return when {
+            v > Short.MAX_VALUE.toInt() -> Short.MAX_VALUE
+            v < Short.MIN_VALUE.toInt() -> Short.MIN_VALUE
+            else -> v.toShort()
+        }
+    }
+
+    private fun clamp8(v: Int): Byte {
+        return when {
+            v > Byte.MAX_VALUE.toInt() -> Byte.MAX_VALUE
+            v < Byte.MIN_VALUE.toInt() -> Byte.MIN_VALUE
+            else -> v.toByte()
+        }
+    }
+
+    companion object {
+        // Static-style helpers in case code calls PcmBoostPlayer.boostPcm16(...)
+        fun boostPcm16(input: ShortArray, factor: Float): ShortArray = PcmBoostPlayer().boost16(input, factor)
+        fun boostPcm8(input: ByteArray, factor: Float): ByteArray = PcmBoostPlayer().boost8(input, factor)
+        fun limit(input: ShortArray, maxLevel: Short): ShortArray = PcmBoostPlayer().limit16(input, maxLevel)
     }
 }
