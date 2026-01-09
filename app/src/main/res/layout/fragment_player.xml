@@ -1,68 +1,18 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/playerRoot"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10dp">
-
-    <androidx.media3.ui.PlayerView
-        android:id="@+id/playerView"
-        android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:layout_marginBottom="8dp"
-        android:useController="true"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/urlBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Paste URL (mp3/mp4/m3u8)"
-            android:singleLine="true"/>
-
-        <Button
-            android:id="@+id/btnPlayUrl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Play"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="8dp">
-
-        <Button
-            android:id="@+id/btnPickFile"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Open File"/>
-
-        <Button
-            android:id="@+id/btnSaveFav"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Save Fav"/>
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Favorites"
-        android:textStyle="bold"
-        android:paddingTop="10dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/favList"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/playerRoot" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:padding="10dp">
+<!--  Media3 PlayerView  -->
+<androidx.media3.ui.PlayerView android:id="@+id/playerView" android:layout_width="match_parent" android:layout_height="220dp" android:layout_marginBottom="8dp" app:use_controller="true"/>
+<!--  URL input  -->
+<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+<EditText android:id="@+id/urlBox" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:hint="Paste URL (mp3 / mp4 / m3u8)" android:singleLine="true"/>
+<Button android:id="@+id/btnPlayUrl" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Play"/>
+</LinearLayout>
+<!--  File + Favorite buttons  -->
+<LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:paddingTop="8dp">
+<Button android:id="@+id/btnPickFile" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Open File"/>
+<Button android:id="@+id/btnSaveFav" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Save Fav"/>
+</LinearLayout>
+<!--  Favorites label  -->
+<TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingTop="10dp" android:text="Favorites" android:textStyle="bold"/>
+<!--  Favorites list  -->
+<androidx.recyclerview.widget.RecyclerView android:id="@+id/favList" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"/>
 </LinearLayout>
