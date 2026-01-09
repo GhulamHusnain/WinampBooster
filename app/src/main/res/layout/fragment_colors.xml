@@ -1,0 +1,43 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/colorsRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Customize Colors (Winamp Style)"
+            android:textStyle="bold"/>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Background" android:paddingTop="10dp"/>
+        <SeekBar android:id="@+id/bgR" android:max="255" />
+        <SeekBar android:id="@+id/bgG" android:max="255" />
+        <SeekBar android:id="@+id/bgB" android:max="255" />
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Accent (buttons/nav)" android:paddingTop="10dp"/>
+        <SeekBar android:id="@+id/acR" android:max="255" />
+        <SeekBar android:id="@+id/acG" android:max="255" />
+        <SeekBar android:id="@+id/acB" android:max="255" />
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="Text" android:paddingTop="10dp"/>
+        <SeekBar android:id="@+id/txR" android:max="255" />
+        <SeekBar android:id="@+id/txG" android:max="255" />
+        <SeekBar android:id="@+id/txB" android:max="255" />
+
+        <Button
+            android:id="@+id/btnApply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Apply (Restart UI)"
+            android:paddingTop="10dp"/>
+    </LinearLayout>
+</ScrollView>

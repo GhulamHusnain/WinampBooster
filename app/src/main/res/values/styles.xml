@@ -1,0 +1,5 @@
+<resources>
+    <style name="Theme.WinampBooster" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Keep default; user colors applied at runtime -->
+    </style>
+</resources>

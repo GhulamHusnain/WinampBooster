@@ -1,0 +1,5 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_player" android:title="Player" android:icon="@android:drawable/ic_media_play"/>
+    <item android:id="@+id/nav_booster" android:title="Booster" android:icon="@android:drawable/ic_lock_silent_mode_off"/>
+    <item android:id="@+id/nav_settings" android:title="Colors" android:icon="@android:drawable/ic_menu_manage"/>
+</menu>

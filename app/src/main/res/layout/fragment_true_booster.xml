@@ -1,0 +1,69 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/boostRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <Button
+        android:id="@+id/btnPickAudio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pick Local Audio (True Booster)"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="8dp">
+
+        <Button
+            android:id="@+id/btnPlay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Play"/>
+
+        <Button
+            android:id="@+id/btnPause"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Pause"/>
+
+        <Button
+            android:id="@+id/btnStop"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Stop"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtGain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Gain: 0 dB"
+        android:paddingTop="10dp"/>
+
+    <SeekBar
+        android:id="@+id/seekGain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="12"/>
+
+    <CheckBox
+        android:id="@+id/chkLimiter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Limiter"
+        android:checked="true"
+        android:paddingTop="6dp"/>
+
+    <TextView
+        android:id="@+id/txtPos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="00:00 / 00:00"
+        android:paddingTop="8dp"/>
+</LinearLayout>
