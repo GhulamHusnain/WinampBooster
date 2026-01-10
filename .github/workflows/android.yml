@@ -17,19 +17,23 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      # ❌ DO NOT let the action accept licenses (it triggers interactive prompt)
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
         with:
           cmdline-tools-version: 12266719
+          # IMPORTANT: no accept-android-sdk-licenses here
+          # IMPORTANT: no log-accepted-android-sdk-licenses here
+          packages: platform-tools
 
-      # ✅ Force-accept ALL SDK licenses (non-interactive)
+      # ✅ Accept licenses non-interactively (this works in CI)
       - name: Accept Android SDK licenses
         shell: bash
         run: |
           set -e
-          yes | sdkmanager --licenses >/dev/null
+          yes | sdkmanager --licenses >/dev/null || true
 
-      # ✅ Install only what we need for a normal app build
+      # ✅ Install SDK packages needed to build
       - name: Install required Android SDK packages
         shell: bash
         run: |
