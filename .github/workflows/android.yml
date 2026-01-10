@@ -17,23 +17,23 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      # ❌ DO NOT let the action accept licenses (it triggers interactive prompt)
+      # ✅ Install SDK tools, but DO NOT let the action handle licenses
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
         with:
           cmdline-tools-version: 12266719
-          # IMPORTANT: no accept-android-sdk-licenses here
-          # IMPORTANT: no log-accepted-android-sdk-licenses here
           packages: platform-tools
+          accept-android-sdk-licenses: false
+          log-accepted-android-sdk-licenses: false
 
-      # ✅ Accept licenses non-interactively (this works in CI)
-      - name: Accept Android SDK licenses
+      # ✅ Accept licenses non-interactively
+      - name: Accept Android SDK licenses (non-interactive)
         shell: bash
         run: |
           set -e
-          yes | sdkmanager --licenses >/dev/null || true
+          yes | sdkmanager --licenses >/dev/null
 
-      # ✅ Install SDK packages needed to build
+      # ✅ Install only what we need (avoid TV add-ons etc.)
       - name: Install required Android SDK packages
         shell: bash
         run: |
@@ -44,7 +44,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build Debug APK
-        run: ./gradlew :app:assembleDebug --stacktrace
+        run: ./gradlew :app:assembleDebug --stacktrace --no-daemon
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
