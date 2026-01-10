@@ -17,7 +17,7 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      # ✅ Install SDK tools, but DO NOT let the action handle licenses
+      # Install Android cmdline tools + platform-tools only (no license prompts here)
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
         with:
@@ -26,14 +26,14 @@ jobs:
           accept-android-sdk-licenses: false
           log-accepted-android-sdk-licenses: false
 
-      # ✅ Accept licenses non-interactively
+      # Accept licenses non-interactively (avoid prompt + broken pipe failure)
       - name: Accept Android SDK licenses (non-interactive)
         shell: bash
         run: |
           set -e
-          yes | sdkmanager --licenses >/dev/null
+          yes | sdkmanager --licenses >/dev/null || true
 
-      # ✅ Install only what we need (avoid TV add-ons etc.)
+      # Install what Gradle needs to compile your app
       - name: Install required Android SDK packages
         shell: bash
         run: |
